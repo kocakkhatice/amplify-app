@@ -1,0 +1,46 @@
+<div class="todos w-12 lg:w-4/12 sm:w-10/12 m-auto">
+  <h1 class="text-[100px] text-center text-[#af2f2f]/[.15]">todos</h1>
+  <form
+    autocomplete="off"
+    [formGroup]="createForm"
+    (keyup.enter)="onCreate(createForm.value)"
+  >
+    <input
+      type="text"
+      name="inputTodo"
+      placeholder="What needs to be done?"
+      class="border-none italic py-4 leading-[1.4em] text-[#4d4d4d] text-[24px] bg-[#fff] shadow-inner shadow-[#000]/[.03] w-full outline-none focus:ring-transparent focus:shadow-[#000]/[.03]"
+      formControlName="name"
+    />
+  </form>
+  <div
+    class="flex justify-between py-4 px-2"
+    *ngFor="let todo of todos; let i = index"
+    class="group text-2xl  border-b-[#ededed] border-b-[1px] {{
+      todo.done ? 'text-[#d9d9d9] line-through' : ''
+    }}"
+  >
+    <input
+      value="{{ todo.done }}"
+      type="checkbox"
+      (change)="onToggle(todo)"
+      [checked]="todo.done"
+      class=""
+    />
+    <div>
+      {{ todo.name }}
+    </div>
+    <div
+      class="inline-flex items-center invisible group-hover:visible text-[#cc9a9a] text-lg hover:text-[#af5b5e]"
+      (click)="deleteTodo(todo)"
+    >
+      <span class="inline-flex">x</span>
+    </div>
+  </div>
+  <footer>
+    <button>{{ leftTodo }} items left</button>
+    <button class="m-5" (click)="allTodos()">all</button>
+    <button class="m-5" (click)="activeTodos()">active</button>
+    <button class="m-5" (click)="completedTodos()">completed</button>
+  </footer>
+</div>
